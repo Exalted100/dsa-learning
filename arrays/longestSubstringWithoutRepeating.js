@@ -22,5 +22,5 @@ const lengthOfLongestSubstring = (s) => {
     return longestSubstring;
 };
 
-// O(n) time complexity
+// O(n^2) time complexity
 console.log(lengthOfLongestSubstring("pwwkew"))
