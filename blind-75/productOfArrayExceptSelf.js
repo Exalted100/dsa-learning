@@ -6,11 +6,22 @@
  */
 var productExceptSelf = function(nums) {
     const newArray = [];
-    const numsObject = {};
 
     for (let i = 0; i < nums.length; i++) {
-        numsObject[nums[i]] = 1;
+        let tempValue = 1;
+        for (let e = 0; e < nums.length; e++) {
+            if (e !== i) {
+                tempValue *= nums[e];
+            }
+
+            if (e === nums.length - 1) {
+                newArray[i] = tempValue;
+            }
+        }
     }
 
-    for (let i = 0; i < nums.length; i++) {}
+    return newArray;
 };
+
+console.log(productExceptSelf([1,2,3,4]))
+console.log(productExceptSelf([-1,1,0,-3,3]))
