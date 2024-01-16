@@ -5,64 +5,22 @@
  * @return {number}
  */
 
-// WRONG
-// var maxSubArray = function(nums) {
-//     let maxSubarraySum = nums.reduce((partialSum, a) => partialSum + a, 0);
-
-//     for (let firstPointer = 0, secondPointer = nums.length - 1; secondPointer >= firstPointer; null) {
-//         const presentArray = nums.slice(firstPointer, secondPointer + 1);
-//         const arraySum = presentArray.reduce((partialSum, a) => partialSum + a, 0);
-//         if (arraySum > maxSubarraySum) {
-//             maxSubarraySum = arraySum;
-//         }
-
-//         if (nums[secondPointer] + nums[secondPointer - 1] < 0 && nums[secondPointer] > 0 && secondPointer - firstPointer > 1) {
-//             secondPointer--;
-//         } else if (nums[firstPointer] + nums[firstPointer + 1] < 0 && nums[firstPointer] > 0 && secondPointer - firstPointer > 1) {
-//             firstPointer++;
-//         } else if (nums[firstPointer] < nums[secondPointer]) {
-//             firstPointer++;
-//         } else {
-//             secondPointer--;
-//         }
-//     }
-
-//     return maxSubarraySum;
-// };
-
-// WRONG
+// TOO SLOW
 // var maxSubArray = function (nums) {
-//     positiveIntegers = nums.filter((num) => num > 0);
+//   positiveIntegers = nums.filter((num) => num > 0);
 //   let maxSubarraySum = nums.reduce((partialSum, a) => partialSum + a, 0);
 
 //   if (positiveIntegers.length < 2) {
 //     maxSubarraySum = Math.max(...nums);
-// } else {
-//     for (
-//       let firstPointer = 0, secondPointer = 1;
-//       secondPointer <= nums.length;
-//       null
-//     ) {
-//       const presentArray = nums.slice(firstPointer, secondPointer + 1);
-//       const arraySum = presentArray.reduce(
-//         (partialSum, a) => partialSum + a,
-//         0
-//       );
-//       if (arraySum > maxSubarraySum) {
-//         maxSubarraySum = arraySum;
-//       }
+//   } else {
+//     for (let i = 0; i < nums.length; i++) {
+//       for (let e = i; e < nums.length; e++) {
+//         const presentArray = nums.slice(i, e + 1);
+//         const presentArraySum = presentArray.reduce((partialSum, a) => partialSum + a, 0);
 
-//       if (
-//         nums[firstPointer] < 0 ||
-//         nums[firstPointer] + nums[firstPointer + 1] <
-//           0
-//       ) {
-//         firstPointer = secondPointer;
-//         secondPointer++;
-//       } else if (arraySum > maxSubarraySum) {
-//         secondPointer++;
-//       } else {
-//         secondPointer++;
+//         if (presentArraySum > maxSubarraySum) {
+//             maxSubarraySum = presentArraySum;
+//         }
 //       }
 //     }
 //   }
@@ -71,26 +29,23 @@
 // };
 
 var maxSubArray = function (nums) {
-  positiveIntegers = nums.filter((num) => num > 0);
-  let maxSubarraySum = nums.reduce((partialSum, a) => partialSum + a, 0);
+    let maxSum = nums[0];
+    let currentSum = nums[0];
 
-  if (positiveIntegers.length < 2) {
-    maxSubarraySum = Math.max(...nums);
-  } else {
-    for (let i = 0; i < nums.length; i++) {
-      for (let e = i; e < nums.length; e++) {
-        const presentArray = nums.slice(i, e + 1);
-        const presentArraySum = presentArray.reduce((partialSum, a) => partialSum + a, 0);
-
-        if (presentArraySum > maxSubarraySum) {
-            maxSubarraySum = presentArraySum;
+    for (let i = 1; i < nums.length; i++) {
+        if (currentSum < 0) {
+            currentSum = 0
         }
-      }
-    }
-  }
 
-  return maxSubarraySum;
-};
+        currentSum += nums[i]
+
+        if (maxSum < currentSum) {
+            maxSum = currentSum;
+        }
+    }
+
+    return maxSum;
+  };
 
 console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
 console.log(maxSubArray([1]));
